@@ -1,87 +1,96 @@
-# Frontend Mentor - QR code component
 
-![Design preview for the QR code component coding challenge](./preview.jpg)
+```markdown
+# QR Code Generator with Go and Fiber
 
-## Welcome! 👋
+This project is a simple QR Code generator built using the Go programming language with the [Fiber](https://github.com/gofiber/fiber) web framework and the [go-qrcode](https://github.com/skip2/go-qrcode) package. The frontend uses HTML and Bootstrap for styling.
 
-Thanks for checking out this front-end coding challenge.
+## Features
 
-[Frontend Mentor](https://www.frontendmentor.io) challenges help you improve your coding skills by building realistic projects.
+- Enter a URL or any text in the input field.
+- Submit the form to generate a QR code.
+- The QR code is dynamically created and displayed in the iframe.
+- If no QR code is generated, the default image is shown.
 
-**To do this challenge, you need a basic understanding of HTML and CSS.**
+## Project Structure
 
-## The challenge
+```
+├── Frontend/
+│   └── index.html         # HTML file for frontend UI
+├── images/
+│   └── image-qr-code.png  # Default image (before generating QR code)
+├── main.go                # Go backend code for generating QR code
+├── README.md              # Project documentation
+└── go.mod                 # Go module file
+```
 
-Your challenge is to build out this QR code component and get it looking as close to the design as possible.
+## Setup Instructions
 
-You can use any tools you like to help you complete the challenge. So if you've got something you'd like to practice, feel free to give it a go.
+### Prerequisites
 
-Want some support on the challenge? [Join our community](https://www.frontendmentor.io/community) and ask questions in the **#help** channel.
+Before running this project, ensure you have the following installed:
 
-## Where to find everything
+- Go 1.22 or later (Download from [here](https://golang.org/dl/))
+- A text editor/IDE of your choice (e.g., VS Code, GoLand)
 
-Your task is to build out the project to the designs inside the `/design` folder. You will find both a mobile and a desktop version of the design. 
+### Install Go Dependencies
 
-The designs are in JPG static format. Using JPGs will mean that you'll need to use your best judgment for styles such as `font-size`, `padding` and `margin`. 
+In your project directory, run the following command to install the required Go dependencies:
 
-If you would like the design files (we provide Sketch & Figma versions) to inspect the design in more detail, you can [subscribe as a PRO member](https://www.frontendmentor.io/pro).
+```bash
+go mod tidy
+```
 
-You will find all the required assets in the `/images` folder. The assets are already optimized.
+This will install the necessary libraries, such as Fiber and go-qrcode.
 
-There is also a `style-guide.md` file containing the information you'll need, such as color palette and fonts.
+### Running the Server
 
-## Building your project
+1. **Start the Go server**: 
 
-Feel free to use any workflow that you feel comfortable with. Below is a suggested process, but do not feel like you need to follow these steps:
+   Navigate to the project directory in your terminal and run:
 
-1. Initialize your project as a public repository on [GitHub](https://github.com/). Creating a repo will make it easier to share your code with the community if you need help. If you're not sure how to do this, [have a read-through of this Try Git resource](https://try.github.io/).
-2. Configure your repository to publish your code to a web address. This will also be useful if you need some help during a challenge as you can share the URL for your project with your repo URL. There are a number of ways to do this, and we provide some recommendations below.
-3. Look through the designs to start planning out how you'll tackle the project. This step is crucial to help you think ahead for CSS classes to create reusable styles.
-4. Before adding any styles, structure your content with HTML. Writing your HTML first can help focus your attention on creating well-structured content.
-5. Write out the base styles for your project, including general content styles, such as `font-family` and `font-size`.
-6. Start adding styles to the top of the page and work down. Only move on to the next section once you're happy you've completed the area you're working on.
+   ```bash
+   go run main.go
+   ```
 
-## Deploying your project
+2. **Access the application**: 
 
-As mentioned above, there are many ways to host your project for free. Our recommended hosts are:
+   Open your browser and go to `http://localhost:8000`. You should see the QR code generator interface.
 
-- [GitHub Pages](https://pages.github.com/)
-- [Vercel](https://vercel.com/)
-- [Netlify](https://www.netlify.com/)
+### Frontend: HTML Form
 
-You can host your site using one of these solutions or any of our other trusted providers. [Read more about our recommended and trusted hosts](https://medium.com/frontend-mentor/frontend-mentor-trusted-hosting-providers-bf000dfebe).
+The frontend consists of an HTML form where users can input a URL or text. Upon submission, the form sends a `POST` request to the `/generate` endpoint, which returns a dynamically generated QR code.
 
-## Create a custom `README.md`
+- The default image is displayed until a QR code is generated.
+- Once the form is submitted, the server responds with the QR code image, which is displayed inside the `<iframe>`.
 
-We strongly recommend overwriting this `README.md` with a custom one. We've provided a template inside the [`README-template.md`](./README-template.md) file in this starter code.
+### Backend: Go Server
 
-The template provides a guide for what to add. A custom `README` will help you explain your project and reflect on your learnings. Please feel free to edit our template as much as you like.
+The Go server uses the following:
 
-Once you've added your information to the template, delete this file and rename the `README-template.md` file to `README.md`. That will make it show up as your repository's README file.
+- **Fiber Framework**: To handle HTTP requests.
+- **go-qrcode**: To generate QR codes from the input text.
 
-## Submitting your solution
+When the form is submitted, the server generates a QR code and sends the image as a response, which is displayed in the frontend.
 
-Submit your solution on the platform for the rest of the community to see. Follow our ["Complete guide to submitting solutions"](https://medium.com/frontend-mentor/a-complete-guide-to-submitting-solutions-on-frontend-mentor-ac6384162248) for tips on how to do this.
+### Example Flow
 
-Remember, if you're looking for feedback on your solution, be sure to ask questions when submitting it. The more specific and detailed you are with your questions, the higher the chance you'll get valuable feedback from the community.
+1. **Open the page**: When you navigate to `http://localhost:8000`, you will see the default image with an input field.
+2. **Enter a link**: Enter a URL or any text into the input field.
+3. **Submit the form**: When you click the "Generate" button, the form is submitted to the backend, and the QR code is generated and displayed inside the iframe.
+4. **Result**: The QR code is displayed, and users can scan it.
 
-## Sharing your solution
+### Troubleshooting
 
-There are multiple places you can share your solution:
+If the QR code is not showing up:
 
-1. Share your solution page in the **#finished-projects** channel of the [community](https://www.frontendmentor.io/community). 
-2. Tweet [@frontendmentor](https://twitter.com/frontendmentor) and mention **@frontendmentor**, including the repo and live URLs in the tweet. We'd love to take a look at what you've built and help share it around.
-3. Share your solution on other social channels like LinkedIn.
-4. Blog about your experience building your project. Writing about your workflow, technical choices, and talking through your code is a brilliant way to reinforce what you've learned. Great platforms to write on are [dev.to](https://dev.to/), [Hashnode](https://hashnode.com/), and [CodeNewbie](https://community.codenewbie.org/).
+1. **Check Go Server Logs**: Make sure there are no errors when generating the QR code.
+2. **Check Browser Console**: Ensure there are no JavaScript or network errors in the developer tools (F12).
+3. **Ensure Correct Form Submission**: The form should be correctly submitting to `/generate`, and the response should load into the iframe.
 
-We provide templates to help you share your solution once you've submitted it on the platform. Please do edit them and include specific questions when you're looking for feedback. 
+## License
 
-The more specific you are with your questions the more likely it is that another member of the community will give you feedback.
+This project is open-source and available under the MIT License. See the [LICENSE](LICENSE) file for more information.
 
-## Got feedback for us?
+```
 
-We love receiving feedback! We're always looking to improve our challenges and our platform. So if you have anything you'd like to mention, please email hi[at]frontendmentor[dot]io.
-
-This challenge is completely free. Please share it with anyone who will find it useful for practice.
-
-**Have fun building!** 🚀
+This `README.md` file includes all necessary setup and usage instructions without any code snippets directly from your project. It will guide users to set up, run, and troubleshoot your QR Code generator app.
